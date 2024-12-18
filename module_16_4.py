@@ -4,13 +4,11 @@ from typing import List, Optional
 
 app = FastAPI()
 
-# Определяем модель User
 class User(BaseModel):
     id: int
     username: str
     age: int
 
-# Инициализация списка пользователей
 users: List[User ] = []
 
 @app.get("/users", response_model=List[User ])
@@ -19,7 +17,6 @@ async def get_users() -> List[User ]:
 
 @app.post("/user/{username}/{age}", response_model=User )
 async def create_user(username: str, age: int) -> User:
-    # Определяем новый id
     new_id = 1 if not users else users[-1].id + 1
     new_user = User(id=new_id, username=username, age=age)
     users.append(new_user)
